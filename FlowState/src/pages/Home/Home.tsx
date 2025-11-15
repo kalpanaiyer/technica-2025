@@ -5,7 +5,7 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className='bg-white/60 my-15 mx-25 p-15 rounded-[50px]'>
+    <div className='bg-white/60 my-15 mx-25 p-15 rounded-[50px] backdrop-blur-[2px]'>
       <h1 className='text-[60px]'>Welcome to Flowstate</h1>
       <p className='text-[32px] mb-10'>Personalized Soundscapes: Focus Engineered for the Neurodivergent Brain</p>
     
