@@ -1,0 +1,28 @@
+html {
+  background-image: url('../../public/bg-image.png');
+  background-size: cover;
+}
+
+.featureBoxes {
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.25);
+  padding: 2rem;
+  margin: 2rem;
+  gap: 2rem;
+  flex: 1;
+}
+
+:global(h2) {
+  font-size: 24px;
+}
+
+.featureBoxes p {
+  font-size: 16px;
+}
+
+.featureBoxes img {
+  align-self: center;
+}
