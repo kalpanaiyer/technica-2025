@@ -2,5 +2,16 @@
 @import "tailwindcss";
 
 body {
-  font-family: 'Abel', sans-serif;
+    font-family: 'Abel', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 0.3; 
+  }
+  50% { 
+    opacity: 1; 
+  }
 }
