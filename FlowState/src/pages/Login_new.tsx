@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase.ts';
-import bgImage from '../../public/bg-image.png';
+import bgImage from '/bg-image.png';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -25,9 +25,13 @@ const Login: React.FC = () => {
         console.log('User created:', userCredential.user);
         alert('Account created successfully!');
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Authentication error:', err);
-      setError(err.message);
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError(String(err));
+      }
     } finally {
       setLoading(false);
     }
