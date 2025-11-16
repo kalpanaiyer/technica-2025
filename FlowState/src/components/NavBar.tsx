@@ -64,8 +64,8 @@ const Navbar: React.FC = () => {
                 <span>Dashboard</span>
             </button>
 
-            <button className={`menu-item ${activePath === '/shop' ? 'active' : ''}`} onClick={() => handleNavigation('/shop')}>
-                <img src={notesIcon} className="menu-icon" alt="Shop" />
+            <button className={`menu-item ${activePath === '/store' ? 'active' : ''}`} onClick={() => handleNavigation('/store')}>
+                <img src={notesIcon} className="menu-icon" alt="store" />
                 <span>Notes Shop</span>
             </button>
 
