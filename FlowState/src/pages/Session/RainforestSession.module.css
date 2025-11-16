@@ -1,0 +1,41 @@
+.sessionContainer {
+  background-image: url('/images/rainforest8bit.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Override all SVG fills to dark green */
+.sessionContainer svg {
+  fill: #2d5016 !important;
+}
+
+.sessionContainer svg path {
+  fill: #2d5016 !important;
+}
+
+.sessionContainer svg circle {
+  fill: #2d5016 !important;
+}
+
+.sessionContainer svg rect {
+  fill: #2d5016 !important;
+}
+
+/* If icons use stroke instead of fill */
+.sessionContainer svg {
+  stroke: #2d5016 !important;
+}
+
+/* Override any specific color classes */
+.sessionContainer [class*="text-"] {
+  color: #2d5016 !important;
+}
+
+/* Target specific components if needed */
+.sessionContainer button svg,
+.sessionContainer .timer svg,
+.sessionContainer .todo svg {
+  fill: #2d5016 !important;
+}
