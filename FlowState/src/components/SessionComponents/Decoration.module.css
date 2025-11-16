@@ -1,0 +1,132 @@
+.container {
+    position: relative;
+}
+
+.tab {
+    width: 8.6875rem;
+    height: 3rem;
+    border-radius: 1.25rem;
+    border-radius: 1.25rem;
+    opacity: 0.8;
+    background: var(--Primary-2, #64A6BD);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.tab:hover {
+    opacity: 1;
+}
+
+.tab h2 {
+    color: #000;
+    font-family: Abel;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+
+.dropdown_panel {
+    position: absolute;
+    top: 3.5rem;
+    right: 0;
+    width: 16.75rem;
+    height: 26.4375rem;
+    flex-shrink: 0;
+    border-radius: 1.25rem;
+    opacity: 0.8;
+    background: var(--Primary-2, #64A6BD);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    padding: 1rem;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 0.8;
+        transform: translateY(0);
+    }
+}
+
+.decoration_content {
+    color: #FFF;
+    font-family: Abel;
+    font-size: 1.125rem;
+}
+.grid_container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.2rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.grid_item {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 1.25rem;
+    background: rgba(199, 224, 234, 0.8);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; 
+    gap: 0.2rem;
+}
+
+.grid_item:hover {
+    background: rgba(199, 224, 234, 1);
+    transform: scale(1.02);
+}
+
+.item_name {
+    color: #5D608A;
+    font-family: Abel;
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin: 0;
+}
+
+.item_icon {
+    width: 2.92188rem;
+    height: 2.39063rem;
+    flex-shrink: 0;
+}
+
+
+.note_display {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.note_count {
+    color: #5D608A;
+    font-family: Abel;
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1;
+}
+
+.placed_fish {
+    position: absolute;
+    z-index: 10;
+}
+
+.placed_fish svg path {
+    fill: white;
+}

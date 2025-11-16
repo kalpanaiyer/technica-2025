@@ -12,9 +12,7 @@ import { getUserNotes } from '../../services/NotesService.tsx';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../../../firebase.ts';
 import WaveTimer from "../../components/SessionComponents/WaveTimer";
-
-
-
+import Decoration from "../../components/SessionComponents/Decoration.tsx";
 
 const Session: React.FC = () => {
   // const navigate = useNavigate();
@@ -74,9 +72,11 @@ const Session: React.FC = () => {
                 onSelectIcon={(icon) => setSelectedIcon(icon)}
             />
         </div>
-
         <div className="flex justify-start mt-4">
           <Todo />
+        </div>
+        <div className="absolute top-4 right-4 ">
+          <Decoration />
         </div>
       </div>
     </>
