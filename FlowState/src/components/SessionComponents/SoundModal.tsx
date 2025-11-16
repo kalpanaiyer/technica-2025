@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import SoundGenerator from "./SoundGenerator.tsx";
 import SessionAudioCard from "./SessionAudioCard.tsx";
 
-interface GeneratedSound {
-  id: string;
-  prompt: string;
-  audioUrl: string;
-  createdAt: Date;
-  isPlaying: boolean;
-}
+// interface GeneratedSound {
+//   id: string;
+//   prompt: string;
+//   audioUrl: string;
+//   createdAt: Date;
+//   isPlaying: boolean;
+// }
 
 interface SoundGeneratorUIProps {
   onGenerate?: () => void;
@@ -16,32 +16,32 @@ interface SoundGeneratorUIProps {
   onSelectIcon?: (icon: "clock" | "wave") => void;
 }
 
-const initialSavedSounds: GeneratedSound[] = (() => {
-  const now = Date.now();
-  return [
-    {
-      id: "1",
-      prompt: "Peaceful rain with distant thunder",
-      audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-      createdAt: new Date(now - 3600000),
-      isPlaying: false,
-    },
-    {
-      id: "2",
-      prompt: "Upbeat lo-fi hip hop beats",
-      audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-      createdAt: new Date(now - 7200000),
-      isPlaying: false,
-    },
-    {
-      id: "3",
-      prompt: "Ocean waves at sunset",
-      audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-      createdAt: new Date(now - 10800000),
-      isPlaying: false,
-    },
-  ];
-})();
+// const initialSavedSounds: GeneratedSound[] = (() => {
+//   const now = Date.now();
+//   return [
+//     {
+//       id: "1",
+//       prompt: "Peaceful rain with distant thunder",
+//       audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+//       createdAt: new Date(now - 3600000),
+//       isPlaying: false,
+//     },
+//     {
+//       id: "2",
+//       prompt: "Upbeat lo-fi hip hop beats",
+//       audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+//       createdAt: new Date(now - 7200000),
+//       isPlaying: false,
+//     },
+//     {
+//       id: "3",
+//       prompt: "Ocean waves at sunset",
+//       audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+//       createdAt: new Date(now - 10800000),
+//       isPlaying: false,
+//     },
+//   ];
+// })();
 
 const SoundModal: React.FC<SoundGeneratorUIProps> = ({
   onGenerate,
@@ -53,10 +53,10 @@ const SoundModal: React.FC<SoundGeneratorUIProps> = ({
     "generate"
   );
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [savedSounds, setSavedSounds] = useState<GeneratedSound[]>(initialSavedSounds);
-  const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(
-    null
-  );
+  // const [savedSounds, setSavedSounds] = useState<GeneratedSound[]>(initialSavedSounds);
+  // const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(
+  //   null
+  // );
 
   return (
     <div className={`container ${isCollapsed ? "collapsed" : ""}`}>

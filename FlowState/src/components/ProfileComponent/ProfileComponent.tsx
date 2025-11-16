@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './ProfileComponent.css';
 import { useNavigate } from 'react-router-dom';
-import { signOut } from 'firebase/auth';
-import { auth } from '../../../firebase.ts';
+import { signOut, onAuthStateChanged } from 'firebase/auth';
+import { auth, db } from '../../../firebase.ts';
+import { doc, getDoc } from 'firebase/firestore';
 
 interface ProfileComponentProps {
   name?: string;
@@ -14,7 +15,31 @@ const ProfileComponent: React.FC<ProfileComponentProps> = ({
   email = "guest@email.com" 
 }) => {
   const navigate = useNavigate();
+  const [photoURL, setPhotoURL] = useState<string>('');
 
+  useEffect(() => {
+    const loadUserData = async (user: any) => {
+      if (user) {
+        // Try to load photo from Firestore first
+        try {
+          const userDoc = await getDoc(doc(db, 'users', user.uid));
+          if (userDoc.exists() && userDoc.data().photoURL) {
+            setPhotoURL(userDoc.data().photoURL);
+          } else if (user.photoURL) {
+            setPhotoURL(user.photoURL);
+          }
+        } catch (err) {
+          console.error('Error loading photo:', err);
+          if (user.photoURL) {
+            setPhotoURL(user.photoURL);
+          }
+        }
+      }
+    };
+
+    const unsubscribe = onAuthStateChanged(auth, loadUserData);
+    return () => unsubscribe();
+  }, []);
 
   const handleSignOut = async () => {
     try {
@@ -24,6 +49,7 @@ const ProfileComponent: React.FC<ProfileComponentProps> = ({
       console.error('Sign out failed', err);
     }
   };
+
   const sounds = 10;
   const environments = 10;
   const streak = 21;
@@ -42,7 +68,20 @@ const ProfileComponent: React.FC<ProfileComponentProps> = ({
       </div>
       
       <div className="profile-avatar">
-        <div className="avatar-circle"></div>
+        <div className="avatar-circle">
+          {photoURL && (
+            <img 
+              src={photoURL} 
+              alt="Profile" 
+              style={{ 
+                width: '100%', 
+                height: '100%', 
+                objectFit: 'cover',
+                borderRadius: '50%'
+              }} 
+            />
+          )}
+        </div>
       </div>
       
       <h2 className="profile-name">{name}</h2>
