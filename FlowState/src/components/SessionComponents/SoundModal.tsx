@@ -12,10 +12,8 @@ interface GeneratedSound {
 
 interface SoundGeneratorUIProps {
   onGenerate?: () => void;
-  onShufflePrompt?: () => void;
-  onChangeDuration?: (duration: number) => void;
-  onChangeModel?: () => void;
-  onFullscreen?: () => void;
+  selectedIcon?: "clock" | "wave";
+  onSelectIcon?: (icon: "clock" | "wave") => void;
 }
 
 const initialSavedSounds: GeneratedSound[] = (() => {
@@ -47,10 +45,9 @@ const initialSavedSounds: GeneratedSound[] = (() => {
 
 const SoundModal: React.FC<SoundGeneratorUIProps> = ({
   onGenerate,
-  onShufflePrompt,
-  onChangeDuration,
-  onChangeModel,
   onFullscreen,
+  onSelectIcon,
+  selectedIcon,
 }) => {
   const [activeTab, setActiveTab] = useState<"generate" | "mySounds">(
     "generate"
@@ -147,7 +144,9 @@ const SoundModal: React.FC<SoundGeneratorUIProps> = ({
         )}
 
         <div className="rightControls">
-          <button className="iconButton" onClick={onShufflePrompt}>
+          <button  
+           className={`iconButton ${selectedIcon === "wave" ? "iconActive" : ""}`}
+            onClick={() => onSelectIcon?.("wave")}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -165,9 +164,10 @@ const SoundModal: React.FC<SoundGeneratorUIProps> = ({
             </svg>
           </button>
           <button
-            className="iconButton"
-            onClick={() => onChangeDuration?.(30)}
-            title="Change duration"
+            className={`iconButton ${selectedIcon === "clock" ? "iconActive" : ""}`}
+         onClick={() => {
+          onSelectIcon?.("clock");
+    }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -381,6 +381,13 @@ const SoundModal: React.FC<SoundGeneratorUIProps> = ({
           backdrop-filter: blur(10px);
           font-size: 20px;
         }
+
+        .iconActive {
+            background: rgba(60, 62, 88, 0.45) !important;
+            transform: scale(1.08);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+        }
+
         
         .iconButton svg {
           width: 24px;
