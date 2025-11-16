@@ -5,8 +5,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import Login from './pages/Login_new'
 import Store from './pages/Store';
 import Profile from './pages/Profile.tsx';
-
-
+import Session from './pages/Session/Session';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 function App() {
   return (
@@ -18,6 +17,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/store" element={<Store />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/session" element={<Session />} />
       </Routes>
     </BrowserRouter>
     </>

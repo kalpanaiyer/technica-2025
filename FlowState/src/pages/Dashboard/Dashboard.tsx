@@ -10,7 +10,12 @@ const Dashboard: React.FC = () => {
     const canStartSession = selectedEnviroment != null && selectedTime != null
     const handleStartSession = () => {
         if (canStartSession) {
-            navigate('/Session');
+            navigate('/session', {
+                state: {
+                    duration: selectedTime,
+                    enviroment: selectedEnviroment
+                }
+            });
         }
     }
     return (
