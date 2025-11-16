@@ -1,0 +1,15 @@
+.inventory-container {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  padding: 24px;
+  width: 50rem;
+  height: 17rem;
+}
+
+.inventory-container h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  color: #333;
+}
+
