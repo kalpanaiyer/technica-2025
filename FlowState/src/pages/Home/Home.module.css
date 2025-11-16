@@ -1,6 +1,7 @@
 html {
   background-image: url('/images/bg-image.png');
   background-size: cover;
+  overflow-x: hidden;
 }
 
 .featureBoxes {
