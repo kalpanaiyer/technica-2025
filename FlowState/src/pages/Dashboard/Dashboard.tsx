@@ -1,6 +1,8 @@
 import styles from './Dashboard.module.css'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react';
+import Navbar from '../../components/NavBar';
+
 
 const Dashboard: React.FC = () => {
     const navigate = useNavigate();
@@ -20,6 +22,7 @@ const Dashboard: React.FC = () => {
     }
     return (
         <>
+        <Navbar />
         <div className={styles.container}>
             <div className={styles.mission_box}>
                 <div className={styles.mission_badge}>
@@ -31,7 +34,7 @@ const Dashboard: React.FC = () => {
                 <p className='font-Abel text-[16px]'>Let's today with a warm-up. You'll earn 20 bonus notes for completing this quest!</p>
             </div>
             <div className={styles.enviroment_box}>
-                <p className='font-Abel text-[20px]'>Explore your own enviroment</p>
+                <p className='font-Abel text-[20px]'>Choose your flow environment</p>
                 <div className={styles.enviroments}>
                     <div 
                         onClick={() => setSelectEnviroment(selectedEnviroment === 'underwater' ? null : 'underwater')}
@@ -80,6 +83,7 @@ const Dashboard: React.FC = () => {
                 </div>
             </div>
             <button
+            className='hover:cursor-pointer'
             onClick={handleStartSession}
             disabled={!canStartSession}
             >Start Flow Session</button>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../../firebase.ts';
 import bgImage from '/images/bg-image.png';
@@ -10,6 +11,7 @@ const Login: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,17 +19,19 @@ const Login: React.FC = () => {
     setLoading(true);
     try {
       if (isLogin) {
-  const userCredential = await signInWithEmailAndPassword(auth, email, password);
-  console.log('User logged in:', userCredential.user);
-  alert('Login successful!');
-} else {
-  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-  await updateProfile(userCredential.user, {
-    displayName: name
-  });
-  console.log('User created:', userCredential.user);
-  alert('Account created successfully!');
-}
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        console.log('User logged in:', userCredential.user);
+        // Navigate to dashboard after successful login
+        navigate('/dashboard', { replace: true });
+      } else {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(userCredential.user, {
+          displayName: name
+        });
+        console.log('User created:', userCredential.user);
+        // Navigate to dashboard after successful sign-up
+        navigate('/dashboard', { replace: true });
+      }
     } catch (err: unknown) {
       console.error('Authentication error:', err);
       if (err instanceof Error) {

@@ -1,0 +1,26 @@
+.notes-button {
+  background: white;
+  border: none;
+  border-radius: 24px;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+.notes-button:hover {
+  background: #f5f5f5;
+}
+
+.notes-icon {
+  font-size: 18px;
+}
+
+.notes-text {
+  white-space: nowrap;
+}

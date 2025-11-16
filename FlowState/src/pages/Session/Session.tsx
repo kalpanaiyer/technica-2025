@@ -9,7 +9,8 @@ const Session: React.FC = () => {
 
     return (
         <>
-        <div className='flex justify-center mt-[4rem]'>
+        <div className = {styles.sessionContainer}>
+        <div className='flex justify-center pt-16'>
             <Timer/>
         </div>
         <div className='flex justify-start mt-[1rem]'>

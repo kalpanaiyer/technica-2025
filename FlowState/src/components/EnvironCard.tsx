@@ -1,15 +1,13 @@
-import AudioButton from "../components/AudioButton";
-interface AudioCardProps {
+interface EnvironCardProps {
   image: string;
   name: string;
   description: string;
   notes_amt: number;
-  audio: string;
   purchased: boolean;
   onPurchaseClick: (name: string, price: number) => void;
 }
 
-const AudioCard: React.FC<AudioCardProps> = (props) => {
+const EnvironCard: React.FC<EnvironCardProps> = (props) => {
   return (
     <div className='bg-[#F0F8FF] rounded-[18px] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] w-sm p-3'>
 
@@ -21,7 +19,6 @@ const AudioCard: React.FC<AudioCardProps> = (props) => {
         <div className="flex-col">
           <p className='font-[Pixelify_Sans] text-[32px] font-bold'>{props.name}</p>
           <p className='text-xl mb-1'>{props.description}</p>
-          <AudioButton audioPath={props.audio} />
         </div>
       </span>
 
@@ -45,4 +42,4 @@ const AudioCard: React.FC<AudioCardProps> = (props) => {
   )
 };
 
-export default AudioCard;
+export default EnvironCard;
