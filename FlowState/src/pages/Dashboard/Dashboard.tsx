@@ -83,6 +83,7 @@ const Dashboard: React.FC = () => {
                 </div>
             </div>
             <button
+            className='hover:cursor-pointer'
             onClick={handleStartSession}
             disabled={!canStartSession}
             >Start Flow Session</button>
