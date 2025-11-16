@@ -3,7 +3,6 @@
   border-radius: 10px;
   padding: 24px;
   width: 29rem;
-  height: 39rem;
   flex-shrink: 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -98,14 +97,14 @@
 
 .stat-box {
   flex: 1;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(244, 202, 224, 0.50);
   border-radius: 12px;
   padding: 16px;
   text-align: center;
 }
 
 .stat-label {
-  font-size: 13px;
+  font-size: 1.25rem;
   color: #666;
   margin-bottom: 4px;
 }
@@ -118,7 +117,7 @@
 }
 
 .profile-streak {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(244, 202, 224, 0.50);
   border-radius: 12px;
   padding: 16px;
   text-align: center;
