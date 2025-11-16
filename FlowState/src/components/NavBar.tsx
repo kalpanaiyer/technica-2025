@@ -6,7 +6,6 @@ import NotesButton from './NotesButton.tsx';
 import dashboardIcon from '/dashboardicon.svg';
 import notesIcon from '/notesshopicon.svg';
 import profileIcon from '/profileicon.svg';
-import settingsIcon from '/settingsicon.svg';
 
 
 const Navbar: React.FC = () => {
@@ -74,10 +73,6 @@ const Navbar: React.FC = () => {
                 <span>Profile</span>
             </button>
 
-            <button className={`menu-item ${activePath === '/settings' ? 'active' : ''}`}onClick={() => handleNavigation('/settings')}>
-                <img src={settingsIcon} className="menu-icon" alt="Settings" />
-                <span>Settings</span>
-            </button>
         </div>
       </div>
 
