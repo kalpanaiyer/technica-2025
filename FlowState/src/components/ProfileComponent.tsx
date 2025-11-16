@@ -15,6 +15,7 @@ const ProfileComponent: React.FC<ProfileComponentProps> = ({
 }) => {
   const navigate = useNavigate();
 
+
   const handleSignOut = async () => {
     try {
       await signOut(auth);
@@ -28,10 +29,14 @@ const ProfileComponent: React.FC<ProfileComponentProps> = ({
   const streak = 21;
   const level = 12;
 
+  const handleEditClick = () => {
+    navigate('/edit-profile');
+  };
+
   return (
     <div className="profile-card">
       <div className="profile-header">
-        <button className="edit-button">
+        <button className="edit-button" onClick={handleEditClick}>
           <img src="/pencil.svg" alt="Edit" />
         </button>
       </div>

@@ -4,6 +4,7 @@ import Login from './pages/Login_new'
 import Store from './pages/Store';
 import Profile from './pages/Profile.tsx';
 import Dashboard from './pages/Dashboard/Dashboard.tsx'
+import EditProfile from './pages/EditProfile';
 import Session from './pages/Session/Session.tsx'
 import ProtectedRoute from './components/ProtectedRoute.tsx';
 import { AuthProvider } from './auth/AuthProvider.tsx';
@@ -39,6 +40,15 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Profile />
+                </ProtectedRoute>
+              }
+            />
+            
+             <Route
+              path="/edit-profile"
+              element={
+                <ProtectedRoute>
+                  <EditProfile />
                 </ProtectedRoute>
               }
             />
