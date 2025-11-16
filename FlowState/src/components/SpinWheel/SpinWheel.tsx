@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { auth } from '../../../firebase';
-import { addNotesToUser } from '../../services/NotesService';
+import { addNotesToUser, getUserNotes } from '../../services/NotesService';
 import './SpinWheel.css';
 
 interface SpinWheelProps {
@@ -12,6 +12,7 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onClose, onNotesAdded }) => {
   const [isSpinning, setIsSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
   const [result, setResult] = useState<number | null>(null);
+  const [hasSpun, setHasSpun] = useState(false);
 
   const segments = [
     { points: 5, color: '#E8D5F2' },
@@ -32,33 +33,53 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onClose, onNotesAdded }) => {
   const segmentAngle = 360 / totalSegments;
 
   const spinWheel = async () => {
-    if (isSpinning) return;
+    if (isSpinning || hasSpun) return;
 
-    setIsSpinning(true);
-    setResult(null);
+    const user = auth.currentUser;
+    if (!user) {
+      alert('You must be signed in to spin the wheel.');
+      return;
+    }
 
-    const spins = 5 + Math.random() * 3;
-    const randomAngle = Math.random() * 360;
-    const totalRotation = rotation + (spins * 360) + randomAngle;
+    try {
+      // Check if user has enough notes
+      const currentNotes = await getUserNotes(user.uid);
+      if (currentNotes < 10) {
+        alert('Not enough Notes! You need 10 notes to spin the wheel.');
+        return;
+      }
 
-    setRotation(totalRotation);
-
-    setTimeout(async () => {
-      const normalizedAngle = (360 - (totalRotation % 360)) % 360;
-      const segmentIndex = Math.floor(normalizedAngle / segmentAngle) % totalSegments;
-      const wonPoints = segments[segmentIndex].points;
+      await addNotesToUser(user.uid, -15);
       
-      setResult(wonPoints);
-      
-      // Add notes to user's account
-      const user = auth.currentUser;
-      if (user) {
+      // Refresh navbar to show deduction
+      if ((window as any).refreshNavbarNotes) {
+        (window as any).refreshNavbarNotes();
+      }
+
+      setIsSpinning(true);
+      setHasSpun(true);
+      setResult(null);
+
+      const spins = 5 + Math.random() * 3;
+      const randomAngle = Math.random() * 360;
+      const totalRotation = rotation + (spins * 360) + randomAngle;
+
+      setRotation(totalRotation);
+
+      setTimeout(async () => {
+        const normalizedAngle = (360 - (totalRotation % 360)) % 360;
+        const segmentIndex = Math.floor(normalizedAngle / segmentAngle) % totalSegments;
+        const wonPoints = segments[segmentIndex].points;
+        
+        setResult(wonPoints);
+        
+        // Add won points to user's account
         try {
           await addNotesToUser(user.uid, wonPoints);
           if (onNotesAdded) {
             onNotesAdded();
           }
-          // Also refresh navbar
+          // Refresh navbar again to show winnings
           if ((window as any).refreshNavbarNotes) {
             (window as any).refreshNavbarNotes();
           }
@@ -66,10 +87,14 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onClose, onNotesAdded }) => {
           console.error('Error adding notes:', error);
           alert('Error adding notes to your account');
         }
-      }
-      
+        
+        setIsSpinning(false);
+      }, 5000);
+    } catch (error) {
+      console.error('Error spinning wheel:', error);
+      alert('Failed to spin wheel. Please try again.');
       setIsSpinning(false);
-    }, 5000);
+    }
   };
 
   return (
@@ -93,7 +118,7 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onClose, onNotesAdded }) => {
             style={{
               transform: `rotate(${rotation}deg)`,
               transition: isSpinning ? 'transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99)' : 'none',
-              cursor: isSpinning ? 'default' : 'pointer'
+              cursor: isSpinning || hasSpun ? 'default' : 'pointer'
             }}
           >
             {segments.map((segment, index) => {
@@ -165,9 +190,9 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onClose, onNotesAdded }) => {
         <button
           className="spin-button"
           onClick={spinWheel}
-          disabled={isSpinning}
+          disabled={isSpinning || hasSpun}
         >
-          {isSpinning ? 'SPINNING...' : 'SPIN THE WHEEL'}
+          {isSpinning ? 'SPINNING...' : hasSpun ? 'SPUN!' : 'SPIN THE WHEEL'}
         </button>
       </div>
     </div>

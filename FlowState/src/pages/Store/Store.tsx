@@ -1,6 +1,7 @@
 import AudioCard from '../../components/AudioCards/AudioCard';
 import EnvironCard from '../../components/EnvCards/EnvironCard';
 import PurchasePrompt from '../../components/PurchasePrompt';
+import SpinWheel from '../../components/SpinWheel/SpinWheel';
 import './Store.css';
 import { useState, useEffect } from 'react';
 import { auth } from '../../../firebase';
@@ -107,6 +108,7 @@ const Store: React.FC = () => {
   const [activeTab, setActiveTab] = useState('tab1');
   const [selectedItem, setSelectedItem] = useState<SelectedItem | null>(null);
   const [purchasedItems, setPurchasedItems] = useState<string[]>([]);
+  const [showSpinWheel, setShowSpinWheel] = useState(false);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
@@ -125,6 +127,28 @@ const Store: React.FC = () => {
     setSelectedItem({ name, price });
   };
 
+  const handleSpinWheelClick = async () => {
+    const user = auth.currentUser;
+    if (!user?.uid) {
+      alert('You must be signed in to spin the wheel.');
+      return;
+    }
+
+    try {
+      const current = await getUserNotes(user.uid);
+      if (current < 10) {
+        alert('Not enough Notes! You need 10 notes to spin the wheel.');
+        return;
+      }
+
+      // Just show the wheel - deduction happens when user clicks spin
+      setShowSpinWheel(true);
+    } catch (err) {
+      console.error('Failed to start spin wheel:', err);
+      alert('Failed to start spin wheel. Please try again.');
+    }
+  };
+
   const handleConfirm = async () => {
     if (!selectedItem) return;
     const user = auth.currentUser;
@@ -137,7 +161,6 @@ const Store: React.FC = () => {
       const current = await getUserNotes(user.uid);
       if (current < selectedItem.price) {
         alert('Not enough Notes to purchase this item.');
-      
         return;
       }
 
@@ -166,14 +189,35 @@ const Store: React.FC = () => {
   const handleCancel = () => {
     setSelectedItem(null);
   };
+
+  const handleNotesAdded = () => {
+    // Refresh the navbar notes count
+    if ((window as any).refreshNavbarNotes) {
+      (window as any).refreshNavbarNotes();
+    }
+  };
   
   return (
     <>
       <Navbar />
 
       <div className='store-page p-10'>
-        <h1 className='text-[64px]'>STORE</h1>
-        <p className='text-[#696969] text-[40px] mb-10'>Use your notes to purchase new sounds or environments!</p>
+        <div className='mb-10'>
+          <div className='flex justify-between items-start mb-6'>
+            <div>
+              <h1 className='text-[64px]'>STORE</h1>
+              <p className='text-[#696969] text-[40px]'>Use your notes to purchase new sounds or environments!</p>
+            </div>
+            
+            <button
+              onClick={handleSpinWheelClick}
+              className='bg-white text-black font-bold text-[20px] px-15 py-10 rounded-[15px] hover:opacity-90 transition-opacity shadow-lg border-4 border-[#5D608A] whitespace-nowrap'
+            >
+              Spin Wheel for Notes! <br/>
+              <span className='text-[16px]'>(15 Notes to play)</span>
+            </button>
+          </div>
+        </div>
 
         <div className="flex gap-5">
           <button
@@ -214,6 +258,13 @@ const Store: React.FC = () => {
           onConfirm={handleConfirm}
           onCancel={handleCancel}
         />
+
+        {showSpinWheel && (
+          <SpinWheel 
+            onClose={() => setShowSpinWheel(false)}
+            onNotesAdded={handleNotesAdded}
+          />
+        )}
         
       </div>
     </>
