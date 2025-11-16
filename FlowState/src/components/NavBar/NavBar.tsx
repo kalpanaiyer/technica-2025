@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { auth } from '../../../firebase.ts';
 import { onAuthStateChanged } from 'firebase/auth';
 import { getUserNotes } from '../../services/NotesService.tsx';
+import { db } from '../../../firebase.ts';
+import { doc, onSnapshot } from 'firebase/firestore';
 import './Navbar.css';
 import logo from '/images/logos/testlogo.png';
 import NotesButton from '../NotesButton/NotesButton.tsx';
@@ -18,8 +20,16 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const notes = await getUserNotes(user.uid);
-        setNotesCount(notes);
+        // Set up real-time listener on user's notes field
+        const userDocRef = doc(db, 'users', user.uid);
+        const unsubscribeListener = onSnapshot(userDocRef, (docSnap) => {
+          if (docSnap.exists()) {
+            setNotesCount(docSnap.data().notes || 0);
+          } else {
+            setNotesCount(0);
+          }
+        });
+        return () => unsubscribeListener();
       } else {
         setNotesCount(0);
       }
@@ -39,9 +49,9 @@ const Navbar: React.FC = () => {
 
   // Expose refresh function globally
   useEffect(() => {
-    (window as any).refreshNavbarNotes = refreshNotes;
+    (window as unknown as Record<string, unknown>).refreshNavbarNotes = refreshNotes;
     return () => {
-      delete (window as any).refreshNavbarNotes;
+      delete (window as unknown as Record<string, unknown>).refreshNavbarNotes;
     };
   }, []);
 
