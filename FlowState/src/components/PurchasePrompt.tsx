@@ -11,7 +11,7 @@ const PurchasePrompt: React.FC<PurchasePromptProps> = ({ isOpen, itemName, itemP
 
   return (
     <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
-      <div className="bg-white rounded-[18px] p-5 text-[36px] text-[#5D608A] w-[30rem] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
+      <div className="bg-white rounded-[18px] p-5 text-[36px] text-[#5D608A] w-120 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
         <p>Purchase {itemName.toUpperCase()} for {itemPrice} Notes?</p>
 
         <div className="flex gap-3 mt-5 text-black">

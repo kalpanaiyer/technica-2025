@@ -12,7 +12,12 @@ const Dashboard: React.FC = () => {
     const canStartSession = selectedEnviroment != null && selectedTime != null
     const handleStartSession = () => {
         if (canStartSession) {
-            navigate('/Session');
+            navigate('/session', {
+                state: {
+                    duration: selectedTime,
+                    enviroment: selectedEnviroment
+                }
+            });
         }
     }
     return (
@@ -29,7 +34,7 @@ const Dashboard: React.FC = () => {
                 <p className='font-Abel text-[16px]'>Let's today with a warm-up. You'll earn 20 bonus notes for completing this quest!</p>
             </div>
             <div className={styles.enviroment_box}>
-                <p className='font-Abel text-[20px]'>Explore your own enviroment</p>
+                <p className='font-Abel text-[20px]'>Choose your flow environment</p>
                 <div className={styles.enviroments}>
                     <div 
                         onClick={() => setSelectEnviroment(selectedEnviroment === 'underwater' ? null : 'underwater')}
