@@ -1,0 +1,5 @@
+html {
+    background: url("/focus_session.png") no-repeat center fixed;
+    background-size: cover;
+    min-height: 100vh;
+}
