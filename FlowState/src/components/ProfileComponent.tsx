@@ -1,5 +1,6 @@
 import React from 'react';
 import './ProfileComponent.css';
+import { useNavigate } from 'react-router-dom';
 
 interface ProfileComponentProps {
   name?: string;
@@ -10,15 +11,20 @@ const ProfileComponent: React.FC<ProfileComponentProps> = ({
   name = "Guest", 
   email = "guest@email.com" 
 }) => {
+  const navigate = useNavigate();
   const sounds = 10;
   const environments = 10;
   const streak = 21;
   const level = 12;
 
+  const handleEditClick = () => {
+    navigate('/edit-profile');
+  };
+
   return (
     <div className="profile-card">
       <div className="profile-header">
-        <button className="edit-button">
+        <button className="edit-button" onClick={handleEditClick}>
           <img src="/pencil.svg" alt="Edit" />
         </button>
       </div>

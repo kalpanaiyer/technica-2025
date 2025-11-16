@@ -4,6 +4,7 @@ import Login from './pages/Login_new'
 import Store from './pages/Store';
 import Profile from './pages/Profile.tsx';
 import Dashboard from './pages/Dashboard/Dashboard.tsx'
+import EditProfile from './pages/EditProfile';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/store" element={<Store />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/edit-profile" element={<EditProfile />} />
       </Routes>
     </BrowserRouter>
     </>
