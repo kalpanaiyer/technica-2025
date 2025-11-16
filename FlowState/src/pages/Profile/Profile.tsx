@@ -85,20 +85,8 @@ const Profile: React.FC = () => {
             <div className="badges-container">
               <h3>Your Badges</h3>
               <div className='badges-list'>
-                <Badges image='/images/env_icons/coffee.png'/>
-                <Badges image='/images/env_icons/coffee.png'/>
-                <Badges image='/images/env_icons/coffee.png'/>
-                <Badges image='/images/env_icons/coffee.png'/>
-                <Badges image='/images/env_icons/coffee.png'/>
-                <Badges image='/images/env_icons/coffee.png'/>
-                <Badges image='/images/env_icons/coffee.png'/>
-                <Badges image='/images/env_icons/coffee.png'/>
-                <Badges image='/images/env_icons/coffee.png'/>
-                <Badges image='/images/env_icons/coffee.png'/>
-                <Badges image='/images/env_icons/coffee.png'/>
-                <Badges image='/images/env_icons/coffee.png'/>
-                <Badges image='/images/env_icons/coffee.png'/>
-                <Badges image='/images/env_icons/coffee.png'/>
+                <Badges />
+                
               </div>
             </div>
 
