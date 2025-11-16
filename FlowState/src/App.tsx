@@ -8,6 +8,8 @@ import EditProfile from './components/EditProfile/EditProfile.tsx';
 import Session from './pages/Session/Session.tsx'
 import ProtectedRoute from './components/ProtectedRoute.tsx';
 import { AuthProvider } from './auth/AuthProvider.tsx';
+import RainforestSession from './pages/Session/RainforestSession';
+import CafeSession from './pages/Session/CafeSession';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 function App() {
@@ -18,7 +20,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
-            {/* Protected routes */}
+            
             <Route
               path="/dashboard"
               element={
@@ -58,6 +60,23 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Session />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/rainforestsession"
+              element={
+                <ProtectedRoute>
+                  <RainforestSession />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/cafesession"
+              element={
+                <ProtectedRoute>
+                  <CafeSession />
                 </ProtectedRoute>
               }
             />

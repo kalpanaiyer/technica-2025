@@ -1,12 +1,9 @@
-import styles from "./Session.module.css";
-// import { useNavigate } from 'react-router-dom'
-
+import styles from "./CafeSession.module.css";
 import { useState, useEffect } from 'react'
 import { onAuthStateChanged } from 'firebase/auth';
 import Timer from "../../components/SessionComponents/Timer";
 import SoundModal from "../../components/SessionComponents/SoundModal";
 import Todo from "../../components/Todo/Todo";
-import NotesButton from '../../components/NotesButton/NotesButton.tsx';
 import { auth } from '../../../firebase.ts';
 import { getUserNotes } from '../../services/NotesService.tsx';
 import { doc, onSnapshot } from 'firebase/firestore';
@@ -14,14 +11,12 @@ import { db } from '../../../firebase.ts';
 import WaveTimer from "../../components/SessionComponents/WaveTimer";
 
 
-const Session: React.FC = () => {
-  // const navigate = useNavigate();
+const CafeSession: React.FC = () => {
   const [notesCount, setNotesCount] = useState(0);
 
   useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, async (user) => {
         if (user) {
-          // Set up real-time listener on user's notes field
           const userDocRef = doc(db, 'users', user.uid);
           const unsubscribeListener = onSnapshot(userDocRef, (docSnap) => {
             if (docSnap.exists()) {
@@ -39,7 +34,6 @@ const Session: React.FC = () => {
       return () => unsubscribe();
     }, []);
 
-  // Function to refresh notes count
   const refreshNotes = async () => {
     const user = auth.currentUser;
     if (user) {
@@ -55,16 +49,11 @@ const Session: React.FC = () => {
       };
     }, []);
 
-  const [selectedIcon, setSelectedIcon] =  useState<"clock" | "wave">("clock");
-
-
-
-
+  const [selectedIcon, setSelectedIcon] = useState<"clock" | "wave">("clock");
 
   return (
     <>
       <div className={styles.sessionContainer}>
-
         <div className="flex justify-center pt-16">
             {selectedIcon === "clock" ? <Timer /> : <WaveTimer />}
             <SoundModal
@@ -81,4 +70,4 @@ const Session: React.FC = () => {
   );
 };
 
-export default Session;
+export default CafeSession;
