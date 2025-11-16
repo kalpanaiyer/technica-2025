@@ -41,16 +41,15 @@ function SoundContent({ purchasedItems }: { purchasedItems: string[] }) {
 function EnvironmentContent({ purchasedItems }: { purchasedItems: string[] }) {
   const purchasedEnvs = ALL_ENVIRONMENTS.filter(env => purchasedItems.includes(env.id));
 
-  if (purchasedEnvs.length === 0) {
-    return <div className="text-gray-500 text-xl">No environments purchased yet</div>;
-  }
-
   return (
     <div className='flex gap-5 flex-wrap'>
+      {/* Default environment - always shown */}
       <EnvironInvenCard
         image='/images/underwater.png'
         name='Under the Sea'
       />
+      
+      {/* Purchased environments */}
       {purchasedEnvs.map(env => (
         <EnvironInvenCard
           key={env.id}

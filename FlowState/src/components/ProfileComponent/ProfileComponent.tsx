@@ -4,11 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../../../firebase.ts';
 import { doc, getDoc } from 'firebase/firestore';
+import { getUserPurchases } from '../../services/PurchaseService';
 
 interface ProfileComponentProps {
   name?: string;
   email?: string;
 }
+
+const ALL_SOUNDS = ['Rainy Day', 'Brown Noise', 'River Flow', 'Soundbath', 'White Noise'];
+const ALL_ENVIRONMENTS = ['Rainforest', 'Cafe'];
 
 const ProfileComponent: React.FC<ProfileComponentProps> = ({ 
   name = "Guest", 
@@ -16,6 +20,8 @@ const ProfileComponent: React.FC<ProfileComponentProps> = ({
 }) => {
   const navigate = useNavigate();
   const [photoURL, setPhotoURL] = useState<string>('');
+  const [soundsCount, setSoundsCount] = useState<number>(0);
+  const [environmentsCount, setEnvironmentsCount] = useState<number>(1); // Start at 1 for default "Under the Sea"
 
   useEffect(() => {
     const loadUserData = async (user: any) => {
@@ -34,6 +40,21 @@ const ProfileComponent: React.FC<ProfileComponentProps> = ({
             setPhotoURL(user.photoURL);
           }
         }
+
+        // Load purchases and count items
+        try {
+          const purchases = await getUserPurchases(user.uid);
+          
+          // Count sounds
+          const purchasedSounds = purchases.filter(item => ALL_SOUNDS.includes(item));
+          setSoundsCount(purchasedSounds.length);
+          
+          // Count environments (add 1 for default "Under the Sea")
+          const purchasedEnvironments = purchases.filter(item => ALL_ENVIRONMENTS.includes(item));
+          setEnvironmentsCount(purchasedEnvironments.length + 1);
+        } catch (err) {
+          console.error('Error loading purchases:', err);
+        }
       }
     };
 
@@ -50,8 +71,6 @@ const ProfileComponent: React.FC<ProfileComponentProps> = ({
     }
   };
 
-  const sounds = 10;
-  const environments = 10;
   const streak = 21;
   const level = 12;
 
@@ -97,11 +116,11 @@ const ProfileComponent: React.FC<ProfileComponentProps> = ({
       <div className="profile-stats">
         <div className="stat-box">
           <p className="stat-label">Sounds</p>
-          <p className="stat-value">{sounds}</p>
+          <p className="stat-value">{soundsCount}</p>
         </div>
         <div className="stat-box">
           <p className="stat-label">Environments</p>
-          <p className="stat-value">{environments}</p>
+          <p className="stat-value">{environmentsCount}</p>
         </div>
       </div>
       
