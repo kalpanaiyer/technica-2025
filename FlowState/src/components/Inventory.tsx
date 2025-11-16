@@ -1,59 +1,98 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { auth } from '../../firebase';
+import { getUserPurchases } from '../services/PurchaseService';
 import EnvironInvenCard from './EnvCards/EnvironInvenCard';
 import AudioInvenCard from './AudioCards/AudioInvenCard';
 
-function SoundContent() {
+const ALL_SOUNDS = [
+  { id: 'Rainy Day', image: '/images/sound_icons/rain.svg', name: 'Rainy Day' },
+  { id: 'Brown Noise', image: '/images/sound_icons/brown_noise.png', name: 'Brown Noise' },
+  { id: 'River Flow', image: '/images/sound_icons/water.svg', name: 'River Flow' },
+  { id: 'Soundbath', image: '/images/sound_icons/gong.svg', name: 'Soundbath' },
+  { id: 'White Noise', image: '/images/sound_icons/sound-waves.svg', name: 'White Noise' },
+];
+
+const ALL_ENVIRONMENTS = [
+  { id: 'Rainforest', image: '/images/rainforest_bg.jpg', name: 'Rainforest' },
+  { id: 'Cafe', image: '/images/cafe_bg.gif', name: 'Cafe' },
+];
+
+function SoundContent({ purchasedItems }: { purchasedItems: string[] }) {
+  const purchasedSounds = ALL_SOUNDS.filter(sound => purchasedItems.includes(sound.id));
+
+  if (purchasedSounds.length === 0) {
+    return <div className="text-gray-500 text-xl">No sounds purchased yet</div>;
+  }
+
   return (
     <div className='flex gap-5 flex-wrap'>
-      <AudioInvenCard
-        image='/images/sound_icons/rain.svg'
-        name='Rainy Day'
-      />
-      <AudioInvenCard
-        image='/images/sound_icons/brown_noise.png'
-        name='Brown Noise'
-      />
-      <AudioInvenCard
-        image='/images/sound_icons/water.svg'
-        name='River Flow'
-      />
-      <AudioInvenCard
-        image='/images/sound_icons/gong.svg'
-        name='Soundbath'
-      />
-      <AudioInvenCard
-        image='/images/sound_icons/sound-waves.svg'
-        name='White Noise'
-      />
+      {purchasedSounds.map(sound => (
+        <AudioInvenCard
+          key={sound.id}
+          image={sound.image}
+          name={sound.name}
+        />
+      ))}
     </div>
   );
-};
+}
 
-function EnvironmentContent() {
+function EnvironmentContent({ purchasedItems }: { purchasedItems: string[] }) {
+  const purchasedEnvs = ALL_ENVIRONMENTS.filter(env => purchasedItems.includes(env.id));
+
+  if (purchasedEnvs.length === 0) {
+    return <div className="text-gray-500 text-xl">No environments purchased yet</div>;
+  }
+
   return (
     <div className='flex gap-5 flex-wrap'>
       <EnvironInvenCard
         image='/images/underwater.png'
         name='Under the Sea'
       />
-      <EnvironInvenCard
-        image='/images/rainforest_bg.jpg'
-        name='Rainforest'
-      />
-      <EnvironInvenCard
-        image='/images/cafe_bg.gif'
-        name='Cafe'
-      />
-      <EnvironInvenCard />
-      <EnvironInvenCard />
-      <EnvironInvenCard />
+      {purchasedEnvs.map(env => (
+        <EnvironInvenCard
+          key={env.id}
+          image={env.image}
+          name={env.name}
+        />
+      ))}
     </div>
   );
-};
+}
 
 const Inventory: React.FC = () => {
   const [activeTab, setActiveTab] = useState('tab1');
+  const [purchasedItems, setPurchasedItems] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadPurchases();
+  }, []);
+
+  const loadPurchases = async () => {
+    const userId = auth.currentUser?.uid;
+    if (!userId) {
+      console.error('No user logged in');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const purchases = await getUserPurchases(userId);
+      setPurchasedItems(purchases);
+    } catch (err) {
+      console.error('Error loading purchases:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <div>Loading inventory...</div>;
+  }
+
   return (
     <div>
       <div className="flex gap-5">
@@ -80,8 +119,8 @@ const Inventory: React.FC = () => {
       </div>
 
       <div>
-        {activeTab === 'tab1' && <EnvironmentContent/>}
-        {activeTab === 'tab2' && <SoundContent/>}
+        {activeTab === 'tab1' && <EnvironmentContent purchasedItems={purchasedItems} />}
+        {activeTab === 'tab2' && <SoundContent purchasedItems={purchasedItems} />}
       </div>
     </div>
   );
