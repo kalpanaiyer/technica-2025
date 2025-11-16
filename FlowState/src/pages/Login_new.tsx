@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../../firebase.ts';
 import bgImage from '/bg-image.png';
 
@@ -17,14 +17,17 @@ const Login: React.FC = () => {
     setLoading(true);
     try {
       if (isLogin) {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        console.log('User logged in:', userCredential.user);
-        alert('Login successful!');
-      } else {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        console.log('User created:', userCredential.user);
-        alert('Account created successfully!');
-      }
+  const userCredential = await signInWithEmailAndPassword(auth, email, password);
+  console.log('User logged in:', userCredential.user);
+  alert('Login successful!');
+} else {
+  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  await updateProfile(userCredential.user, {
+    displayName: name
+  });
+  console.log('User created:', userCredential.user);
+  alert('Account created successfully!');
+}
     } catch (err: unknown) {
       console.error('Authentication error:', err);
       if (err instanceof Error) {

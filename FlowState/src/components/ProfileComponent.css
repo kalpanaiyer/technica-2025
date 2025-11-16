@@ -1,0 +1,138 @@
+.profile-card {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  padding: 24px;
+  width: 29rem;
+  height: 39rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.edit-button {
+  background: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.edit-button img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.profile-avatar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.avatar-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #d3d3d3;
+}
+
+.profile-name {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+  margin: 8px 0;
+  color: #333;
+}
+
+.profile-email {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.profile-level {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.profile-level span {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  min-width: 40px;
+}
+
+.level-bar {
+  flex: 1;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.level-progress {
+  height: 100%;
+  background: linear-gradient(90deg, #c4a7e7 0%, #f0a0c0 100%);
+  border-radius: 6px;
+}
+
+.profile-stats {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.stat-box {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+.profile-streak {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+}
+
+.streak-label {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.streak-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
