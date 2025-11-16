@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../../firebase.ts';
-import bgImage from '/bg-image.png';
+import bgImage from '/images/bg-image.png';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');

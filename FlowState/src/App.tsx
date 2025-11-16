@@ -1,6 +1,7 @@
 import './App.css'
 import Home from './pages/Home/Home';
-import Login from './pages/Login_new';
+import Login from './pages/Login_new'
+import Store from './pages/Store';
 import Profile from './pages/Profile.tsx';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/store" element={<Store />} />
         <Route path="/profile" element={<Profile />} />
         
       </Routes>
