@@ -1,6 +1,6 @@
 import './App.css'
 import Home from './pages/Home/Home';
-
+import Dashboard from './pages/Dashboard/Dashboard.tsx';
 import Login from './pages/Login_new'
 import Store from './pages/Store';
 import Profile from './pages/Profile.tsx';
