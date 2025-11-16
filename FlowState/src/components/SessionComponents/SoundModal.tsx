@@ -85,7 +85,7 @@ const SoundModal: React.FC<SoundGeneratorUIProps> = ({
         <div className="mainContent">
           {activeTab === "generate" ? (
             <div className="generateContent">
-              <div className="mt-12">
+              <div className="mt-12 w-full">
                 <SoundGenerator />
               </div>
             </div>
@@ -93,7 +93,7 @@ const SoundModal: React.FC<SoundGeneratorUIProps> = ({
             <div className="mySoundsContent">
               <div className="soundsGrid">
                 <SessionAudioCard
-                  image="/images/rain.svg"
+                  image="/images/sound_icons/rain.svg"
                   name="Rainy Day"
                   description="A calming soundscape mirroring a rainy day."
                   notes_amt={25}
@@ -101,28 +101,36 @@ const SoundModal: React.FC<SoundGeneratorUIProps> = ({
                 />
 
                 <SessionAudioCard
-                  image="/images/rain.svg"
-                  name="Rainy Day"
-                  description="A calming soundscape mirroring a rainy day."
+                  image='/images/sound_icons/brown_noise.png'
+                  name='Brown Noise'
+                  description='A smooth tone to tune out the background noise.'
                   notes_amt={25}
-                  audio="/audio/rainnoise.mp3"
+                  audio='/audio/brownnoise.mp3'
                 />
 
                 <SessionAudioCard
-                  image="/images/rain.svg"
-                  name="Rainy Day"
-                  description="A calming soundscape mirroring a rainy day."
+                  image='/images/sound_icons/water.svg'
+                  name='River Flow'
+                  description='Liquid smooth sounds to go with the flow.'
                   notes_amt={25}
-                  audio="/audio/rainnoise.mp3"
+                  audio='/audio/rivernoise.mp3'
                 />
 
                 <SessionAudioCard
-                  image="/images/rain.svg"
-                  name="Rainy Day"
-                  description="A calming soundscape mirroring a rainy day."
+                  image='/images/sound_icons/gong.svg'
+                  name='Soundbath'
+                  description='A therapeutic sequence of regal gongs.'
                   notes_amt={25}
-                  audio="/audio/rainnoise.mp3"
+                  audio='/audio/soundbathnoise.mp3'
                 />
+
+                {/* <SessionAudioCard
+                  image='/images/sound_icons/sound-waves.svg'
+                  name='White Noise'
+                  description='A tone that washes over and blocks out distractions.'
+                  notes_amt={25}
+                  audio='/audio/whitenoise.mp3'
+                /> */}
               </div>
             </div>
           )}
@@ -233,7 +241,6 @@ const SoundModal: React.FC<SoundGeneratorUIProps> = ({
           gap: 8px;
           margin-bottom: 24px;
           animation: fadeIn 0.3s ease;
-      
         }
 
         @keyframes fadeIn {
@@ -245,7 +252,7 @@ const SoundModal: React.FC<SoundGeneratorUIProps> = ({
           padding: 12px 24px;
           background: rgba(255, 255, 255, 0.15);
           border: none;
-          border-radius: 12px;
+          border-radius: 16px;
           color: rgba(255, 255, 255, 0.7);
           font-size: 14px;
           font-weight: 600;

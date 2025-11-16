@@ -11,19 +11,19 @@ const Home: React.FC = () => {
     
     <span className='flex'>
       <div className={styles.featureBoxes}>
-        <img src='/images/audioIcon.png' alt="Audio Icon" />
+        <img src='/images/home/audioIcon.png' alt="Audio Icon" />
         <h2>Personalized Audio</h2>
         <p>Use AI to generate custom sounds.</p>
       </div>
 
       <div className={styles.featureBoxes}>
-        <img src='/images/graphIcon.png' alt="Graph Icon" />
+        <img src='/images/home/graphIcon.png' alt="Graph Icon" />
         <h2>Designed for Every Mind</h2>
         <p>No streak stress, just progress without pressure.</p>
       </div>
 
       <div className={styles.featureBoxes}>
-        <img src='/images/starIcon.png' alt="Star Icon" />
+        <img src='/images/home/starIcon.png' alt="Star Icon" />
         <h2>Level Up Your Focus</h2>
         <p>Earn tokens for every session and unlock new focus worlds as you grow.</p>
       </div>
@@ -31,7 +31,7 @@ const Home: React.FC = () => {
 
     <div onClick={() => navigate('/login')} className='flex items-center gap-5 justify-center transition-transform duration-200 hover:-translate-y-1 hover:cursor-pointer'>
       <p className='inline text-[40px]'>Enter your flowstate</p>
-      <img className='inline' src='/images/pixelArrow.png' alt="Pixelated Arrow" />
+      <img className='inline' src='/images/home/pixelArrow.png' alt="Pixelated Arrow" />
     </div>
       
 

@@ -116,12 +116,12 @@ const App: React.FC = () => {
           onKeyDown={handleKeyDown}
           placeholder="e.g. White Noise or Calm Ocean"
           disabled={isLoading}
-          className="grow px-4 py-3 border border-blue-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150 bg-white shadow-sm"
+          className="grow px-4 py-3 border border-blue-300 rounded-full focus:ring-blue-500 focus:border-blue-500 transition duration-150 bg-white shadow-sm"
         />
         <button
           onClick={generateSound}
           disabled={isLoading || !prompt.trim() || !ELEVENLABS_API_KEY}
-          className={`hover:cursor-pointer w-auto py-3 px-4 rounded-lg font-semibold transition duration-200 shadow-md ${
+          className={`hover:cursor-pointer w-auto py-3 px-4 rounded-full font-semibold transition duration-200 shadow-md ${
             isLoading || !prompt.trim() || !ELEVENLABS_API_KEY
               ? "bg-blue-300 cursor-not-allowed"
               : "bg-blue-600 text-white hover:bg-blue-700 active:scale-95"

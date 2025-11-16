@@ -58,11 +58,11 @@ const Timer: React.FC = () => {
             <p className={styles.time}>{formatTime(timeLeft)}</p>
             <div className='flex gap-4'>
                 {!isRunning ? (
-                    <button className='hover:cursor-pointer' onClick={handleStart}> Start </button>
+                    <button className='hover:cursor-pointer text-white' onClick={handleStart}> Start </button>
                 ) : (
-                    <button className='hover:cursor-pointer' onClick={handlePause}> Pause </button>
+                    <button className='hover:cursor-pointer text-white' onClick={handlePause}> Pause </button>
                 )}
-                <button className='hover:cursor-pointer' onClick={handleReset}> Reset </button>
+                <button className='hover:cursor-pointer text-white' onClick={handleReset}> Reset </button>
             </div>
         </div>
         </>

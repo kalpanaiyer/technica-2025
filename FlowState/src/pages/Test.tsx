@@ -1,4 +1,4 @@
-import SoundGenerator from "../components/SoundGenerator"
+import SoundGenerator from "../components/SessionComponents/SoundGenerator"
 
 const Test: React.FC = () => {
 

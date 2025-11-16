@@ -1,8 +1,8 @@
 import styles from "./Session.module.css";
 // import { useNavigate } from 'react-router-dom'
 // import { useState } from 'react'
-import Timer from "../Components/Timer";
-import SoundModal from "../Components/SoundModal";
+import Timer from "../../components/SessionComponents/Timer";
+import SoundModal from "../../components/SessionComponents/SoundModal";
 import Todo from "../../components/Todo/Todo";
 
 const Session: React.FC = () => {
