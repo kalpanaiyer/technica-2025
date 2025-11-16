@@ -1,6 +1,8 @@
 import styles from './Dashboard.module.css'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react';
+import Navbar from '../../components/NavBar';
+
 
 const Dashboard: React.FC = () => {
     const navigate = useNavigate();
@@ -20,6 +22,7 @@ const Dashboard: React.FC = () => {
     }
     return (
         <>
+        <Navbar />
         <div className={styles.container}>
             <div className={styles.mission_box}>
                 <div className={styles.mission_badge}>

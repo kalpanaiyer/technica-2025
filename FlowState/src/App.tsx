@@ -1,11 +1,10 @@
 import './App.css'
 import Home from './pages/Home/Home';
-
-import Dashboard from './pages/Dashboard/Dashboard';
 import Login from './pages/Login_new'
 import Store from './pages/Store';
 import Profile from './pages/Profile.tsx';
-import Session from './pages/Session/Session';
+import Dashboard from './pages/Dashboard/Dashboard.tsx'
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 function App() {
   return (

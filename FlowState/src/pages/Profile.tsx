@@ -5,6 +5,7 @@ import ProfileComponent from '../components/ProfileComponent';
 import Badges from '../components/Badges';
 import Inventory from '../components/Inventory';
 import './Profile.css';
+import Navbar from '../components/NavBar';
 
 const Profile: React.FC = () => {
   const [userName, setUserName] = useState<string>('');
@@ -35,6 +36,8 @@ const Profile: React.FC = () => {
   }
 
   return (
+    <>
+    <Navbar></Navbar>
     <div className="profile-page">
       <div className="profile-layout">
         <div className="left-section">
@@ -51,6 +54,7 @@ const Profile: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
