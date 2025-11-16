@@ -16,6 +16,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/store" element={<Store />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/session" element={<Session />} />
       </Routes>
     </BrowserRouter>
     </>
