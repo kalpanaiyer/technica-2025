@@ -1,4 +1,4 @@
-import AudioButton from "../components/AudioButton";
+import AudioButton from "./AudioButton";
 interface AudioCardProps {
   image: string;
   name: string;

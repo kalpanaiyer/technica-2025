@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { auth } from '../../firebase';
+import { auth } from '../../../firebase';
 import { onAuthStateChanged, updateProfile, updateEmail, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/NavBar';
+import Navbar from '../NavBar/NavBar';
 import './EditProfile.css';
 
 const EditProfile: React.FC = () => {

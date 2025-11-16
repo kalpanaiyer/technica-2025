@@ -1,9 +1,9 @@
-import AudioCard from '../components/AudioCard';
-import EnvironCard from '../components/EnvironCard';
-import PurchasePrompt from '../components/PurchasePrompt';
+import AudioCard from '../../components/AudioCards/AudioCard';
+import EnvironCard from '../../components/EnvCards/EnvironCard';
+import PurchasePrompt from '../../components/PurchasePrompt';
 import './Store.css';
 import { useState } from 'react';
-import Navbar from '../components/NavBar';
+import Navbar from '../../components/NavBar/NavBar';
 
 interface SelectedItem {
   name: string;
@@ -19,24 +19,54 @@ interface EnvironmentContentProps {
 
 function SoundContent({ onPurchaseClick }: SoundContentProps) {
   return (
-    <div className='flex gap-5'>
+    <div className='flex gap-5 flex-wrap'>
       <AudioCard 
-        image='/images/rain.svg'
+        image='/images/sound_icons/rain.svg'
         name='Rainy Day'
         description='A calming soundscape mirroring a rainy day.'
         notes_amt={25}
         audio='/audio/rainnoise.mp3'
-        purchased={false}
+        purchased={true}
         onPurchaseClick={onPurchaseClick}
       />
 
       <AudioCard
-        image='/images/brown_noise.png'
+        image='/images/sound_icons/brown_noise.png'
         name='Brown Noise'
         description='A smooth tone to tune out the background noise.'
         notes_amt={25}
         audio='/audio/brownnoise.mp3'
         purchased={true}
+        onPurchaseClick={onPurchaseClick}
+      />
+
+      <AudioCard
+        image='/images/sound_icons/water.svg'
+        name='River Flow'
+        description='Liquid smooth sounds to go with the flow.'
+        notes_amt={25}
+        audio='/audio/rivernoise.mp3'
+        purchased={false}
+        onPurchaseClick={onPurchaseClick}
+      />
+
+      <AudioCard
+        image='/images/sound_icons/gong.svg'
+        name='Soundbath'
+        description='A therapeutic sequence of regal gongs.'
+        notes_amt={25}
+        audio='/audio/soundbathnoise.mp3'
+        purchased={false}
+        onPurchaseClick={onPurchaseClick}
+      />
+
+      <AudioCard
+        image='/images/sound_icons/sound-waves.svg'
+        name='White Noise'
+        description='A tone that washes over and blocks out distractions.'
+        notes_amt={25}
+        audio='/audio/whitenoise.mp3'
+        purchased={false}
         onPurchaseClick={onPurchaseClick}
       />
     </div>
@@ -47,7 +77,7 @@ function EnvironmentContent({ onPurchaseClick }: EnvironmentContentProps) {
   return (
     <div className='flex gap-5'>
       <EnvironCard 
-        image='/images/rainforest.png'
+        image='/images/env_icons/rainforest.png'
         name='Rainforest'
         description='Calming wildlife with rain and nature.'
         notes_amt={50}
@@ -56,7 +86,7 @@ function EnvironmentContent({ onPurchaseClick }: EnvironmentContentProps) {
       />
 
       <EnvironCard
-        image='/images/coffee.png'
+        image='/images/env_icons/coffee.png'
         name='Cafe'
         description='Friendly and cozy ambience of a local cafe.'
         notes_amt={50}

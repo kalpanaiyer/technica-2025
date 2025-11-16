@@ -1,5 +1,5 @@
 .sessionContainer {
-    background: url("/focus_session.png") no-repeat center fixed;
+    background: url("/images/focus_session.png") no-repeat center fixed;
     background-size: cover;
     min-height: 100vh;
     width: 100vw; 

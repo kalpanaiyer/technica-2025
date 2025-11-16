@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { auth } from '../../firebase';
+import { auth } from '../../../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { addNotesToUser, getUserNotes } from '../services/NotesService';
-import ProfileComponent from '../components/ProfileComponent';
-import Badges from '../components/Badges';
-import Inventory from '../components/Inventory';
+import { addNotesToUser, getUserNotes } from '../../services/NotesService';
+import ProfileComponent from '../../components/ProfileComponent/ProfileComponent';
+import Badges from '../../components/Badges';
+import Inventory from '../../components/Inventory';
 import './Profile.css';
-import Navbar from '../components/NavBar';
-import SpinWheel from '../components/SpinWheel';
+import Navbar from '../../components/NavBar/NavBar';
+import SpinWheel from '../../components/SpinWheel/SpinWheel';
 
 const Profile: React.FC = () => {
   const [userName, setUserName] = useState<string>('');
@@ -85,20 +85,20 @@ const Profile: React.FC = () => {
             <div className="badges-container">
               <h3>Your Badges</h3>
               <div className='badges-list'>
-                <Badges image='/images/coffee.png'/>
-                <Badges image='/images/coffee.png'/>
-                <Badges image='/images/coffee.png'/>
-                <Badges image='/images/coffee.png'/>
-                <Badges image='/images/coffee.png'/>
-                <Badges image='/images/coffee.png'/>
-                <Badges image='/images/coffee.png'/>
-                <Badges image='/images/coffee.png'/>
-                <Badges image='/images/coffee.png'/>
-                <Badges image='/images/coffee.png'/>
-                <Badges image='/images/coffee.png'/>
-                <Badges image='/images/coffee.png'/>
-                <Badges image='/images/coffee.png'/>
-                <Badges image='/images/coffee.png'/>
+                <Badges image='/images/env_icons/coffee.png'/>
+                <Badges image='/images/env_icons/coffee.png'/>
+                <Badges image='/images/env_icons/coffee.png'/>
+                <Badges image='/images/env_icons/coffee.png'/>
+                <Badges image='/images/env_icons/coffee.png'/>
+                <Badges image='/images/env_icons/coffee.png'/>
+                <Badges image='/images/env_icons/coffee.png'/>
+                <Badges image='/images/env_icons/coffee.png'/>
+                <Badges image='/images/env_icons/coffee.png'/>
+                <Badges image='/images/env_icons/coffee.png'/>
+                <Badges image='/images/env_icons/coffee.png'/>
+                <Badges image='/images/env_icons/coffee.png'/>
+                <Badges image='/images/env_icons/coffee.png'/>
+                <Badges image='/images/env_icons/coffee.png'/>
               </div>
             </div>
 

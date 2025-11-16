@@ -1,5 +1,4 @@
 import React from 'react';
-import './Badges.css';
 
 interface BadgeProps {
   image: string;
@@ -8,7 +7,7 @@ interface BadgeProps {
 const Badges: React.FC<BadgeProps> = ({ image }: BadgeProps) => {
   return (
     <div>
-      <img src={image} alt="Badge" className='badge' />
+      <img src={image} alt="Badge" className='w-20 h-20' />
     </div>
   );
 };

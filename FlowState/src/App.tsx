@@ -1,10 +1,10 @@
 import './App.css'
 import Home from './pages/Home/Home';
 import Login from './pages/Login_new'
-import Store from './pages/Store';
-import Profile from './pages/Profile.tsx';
+import Store from './pages/Store/Store.tsx';
+import Profile from './pages/Profile/Profile.tsx';
 import Dashboard from './pages/Dashboard/Dashboard.tsx'
-import EditProfile from './pages/EditProfile';
+import EditProfile from './components/EditProfile/EditProfile.tsx';
 import Session from './pages/Session/Session.tsx'
 import ProtectedRoute from './components/ProtectedRoute.tsx';
 import { AuthProvider } from './auth/AuthProvider.tsx';

@@ -1,7 +1,7 @@
 import styles from './Dashboard.module.css'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react';
-import Navbar from '../../components/NavBar';
+import Navbar from '../../components/NavBar/NavBar';
 
 
 const Dashboard: React.FC = () => {

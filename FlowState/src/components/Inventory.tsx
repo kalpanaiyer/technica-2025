@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import EnvironInvenCard from './EnvironInvenCard';
+import EnvironInvenCard from './EnvCards/EnvironInvenCard';
 
 // function SoundContent() {
 //   return (
@@ -14,7 +14,7 @@ function EnvironmentContent() {
   return (
     <div className='flex gap-5 flex-wrap'>
       <EnvironInvenCard
-        image='/underwater.png'
+        image='/images/underwater.png'
         name='Under the Sea'
       />
       <EnvironInvenCard />

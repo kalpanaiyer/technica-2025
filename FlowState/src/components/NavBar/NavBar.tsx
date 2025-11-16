@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../../firebase';
+import { auth } from '../../../firebase.ts';
 import { onAuthStateChanged } from 'firebase/auth';
-import { getUserNotes } from '../services/NotesService';
+import { getUserNotes } from '../../services/NotesService.tsx';
 import './Navbar.css';
-import logo from '/testlogo.png';
-import NotesButton from './NotesButton.tsx';
-import dashboardIcon from '/dashboardicon.svg';
-import notesIcon from '/notesshopicon.svg';
-import profileIcon from '/profileicon.svg';
+import logo from '/images/logos/testlogo.png';
+import NotesButton from '../NotesButton/NotesButton.tsx';
+import dashboardIcon from '/images/menu/dashboardicon.svg';
+import notesIcon from '/images/menu/notesshopicon.svg';
+import profileIcon from '/images/menu/profileicon.svg';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

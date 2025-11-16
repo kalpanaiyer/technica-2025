@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { auth } from '../../firebase';
-import { addNotesToUser } from '../services/NotesService';
+import { auth } from '../../../firebase';
+import { addNotesToUser } from '../../services/NotesService';
 import './SpinWheel.css';
 
 interface SpinWheelProps {

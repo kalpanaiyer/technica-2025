@@ -2,7 +2,7 @@ import React from 'react';
 import './ProfileComponent.css';
 import { useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
-import { auth } from '../../firebase.ts';
+import { auth } from '../../../firebase.ts';
 
 interface ProfileComponentProps {
   name?: string;
@@ -37,7 +37,7 @@ const ProfileComponent: React.FC<ProfileComponentProps> = ({
     <div className="profile-card">
       <div className="profile-header">
         <button className="edit-button" onClick={handleEditClick}>
-          <img src="/pencil.svg" alt="Edit" />
+          <img src="/images/pencil.svg" alt="Edit" />
         </button>
       </div>
       
