@@ -1,4 +1,5 @@
 import AudioCard from '../components/AudioCard';
+import EnvironCard from '../components/EnvironCard';
 import PurchasePrompt from '../components/PurchasePrompt';
 import './Store.css';
 import { useState } from 'react';
@@ -9,13 +10,10 @@ interface SelectedItem {
   price: number;
 }
 
-function EnvironmentContent() {
-  return (
-    <></>
-  )
-};
-
 interface SoundContentProps {
+  onPurchaseClick: (name: string, price: number) => void;
+}
+interface EnvironmentContentProps {
   onPurchaseClick: (name: string, price: number) => void;
 }
 
@@ -38,6 +36,30 @@ function SoundContent({ onPurchaseClick }: SoundContentProps) {
         description='A smooth tone to tune out the background noise.'
         notes_amt={25}
         audio='/audio/brownnoise.mp3'
+        purchased={true}
+        onPurchaseClick={onPurchaseClick}
+      />
+    </div>
+  );
+};
+
+function EnvironmentContent({ onPurchaseClick }: EnvironmentContentProps) {
+  return (
+    <div className='flex gap-5'>
+      <EnvironCard 
+        image='/images/rainforest.png'
+        name='Rainforest'
+        description='Calming wildlife with rain and nature.'
+        notes_amt={50}
+        purchased={false}
+        onPurchaseClick={onPurchaseClick}
+      />
+
+      <EnvironCard
+        image='/images/coffee.png'
+        name='Cafe'
+        description='Friendly and cozy ambience of a local cafe.'
+        notes_amt={50}
         purchased={true}
         onPurchaseClick={onPurchaseClick}
       />
@@ -94,7 +116,7 @@ const Store: React.FC = () => {
         </div>
 
         <div>
-          {activeTab === 'tab1' && <EnvironmentContent />}
+          {activeTab === 'tab1' && <EnvironmentContent onPurchaseClick={handlePurchaseClick}/>}
           {activeTab === 'tab2' && <SoundContent onPurchaseClick={handlePurchaseClick} />}
         </div>
 
