@@ -32,7 +32,7 @@ export default function AudioButton({ audioPath }: AudioButtonProps) {
       disabled={isLoading}
       className='hover:cursor-pointer text-[#5D608A] text-xl'
     >
-      {isLoading ? 'Loading...' : isPlaying ? '⏸Playing...' : '▶ Preview Sound'}
+      {isLoading ? 'Loading...' : isPlaying ? '⏸Playing...' : '▶ Play Sound'}
     </button>
   );
 }
