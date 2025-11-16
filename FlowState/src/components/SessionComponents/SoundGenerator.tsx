@@ -120,6 +120,8 @@ const SoundGenerator: React.FC<SoundGeneratorProps> = ({ onGenerated }) => {
       description: `Generated sound for "${prompt}"`,
       audio: audioURL,
       image: "/images/sound_icons/generated_sound.svg",
+      isUserGenerated: true,
+      
     };
 
     setMySounds((prev) => [newSound, ...prev]);
