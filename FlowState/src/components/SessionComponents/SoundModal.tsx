@@ -2,50 +2,21 @@ import React, { useState } from "react";
 import SoundGenerator from "./SoundGenerator.tsx";
 import SessionAudioCard from "./SessionAudioCard.tsx";
 
-// interface GeneratedSound {
-//   id: string;
-//   prompt: string;
-//   audioUrl: string;
-//   createdAt: Date;
-//   isPlaying: boolean;
-// }
-
 interface SoundGeneratorUIProps {
   onGenerate?: () => void;
   selectedIcon?: "clock" | "wave";
   onSelectIcon?: (icon: "clock" | "wave") => void;
 }
 
-// const initialSavedSounds: GeneratedSound[] = (() => {
-//   const now = Date.now();
-//   return [
-//     {
-//       id: "1",
-//       prompt: "Peaceful rain with distant thunder",
-//       audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-//       createdAt: new Date(now - 3600000),
-//       isPlaying: false,
-//     },
-//     {
-//       id: "2",
-//       prompt: "Upbeat lo-fi hip hop beats",
-//       audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-//       createdAt: new Date(now - 7200000),
-//       isPlaying: false,
-//     },
-//     {
-//       id: "3",
-//       prompt: "Ocean waves at sunset",
-//       audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-//       createdAt: new Date(now - 10800000),
-//       isPlaying: false,
-//     },
-//   ];
-// })();
+interface SoundItem {
+  name: string;
+  description: string;
+  audio: string; // URL from Blob or generated audio
+  image?: string; // optional
+  isUserGenerated: boolean;
+}
 
 const SoundModal: React.FC<SoundGeneratorUIProps> = ({
-  onGenerate,
-  onFullscreen,
   onSelectIcon,
   selectedIcon,
 }) => {
@@ -53,14 +24,46 @@ const SoundModal: React.FC<SoundGeneratorUIProps> = ({
     "generate"
   );
   const [isCollapsed, setIsCollapsed] = useState(false);
-  // const [savedSounds, setSavedSounds] = useState<GeneratedSound[]>(initialSavedSounds);
-  // const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(
-  //   null
-  // );
+
+  const initialSounds: SoundItem[] = [
+    {
+      name: "Rainy Day",
+      description: "A calming soundscape mirroring a rainy day.",
+      audio: "/audio/rainnoise.mp3",
+      image: "/images/sound_icons/rain.svg",
+      isUserGenerated: false,
+    },
+    {
+      name: "Brown Noise",
+      description: "A smooth tone to tune out the background noise.",
+      audio: "/audio/brownnoise.mp3",
+      image: "/images/sound_icons/brown_noise.png",
+            isUserGenerated: false,
+
+    },
+    {
+      name: "River Flow",
+      description: "Liquid smooth sounds to go with the flow.",
+      audio: "/audio/rivernoise.mp3",
+      image: "/images/sound_icons/water.svg",
+            isUserGenerated: false,
+
+    },
+    {
+      name: "Soundbath",
+      description: "A therapeutic sequence of regal gongs.",
+      audio: "/audio/soundbathnoise.mp3",
+      image: "/images/sound_icons/gong.svg",
+            isUserGenerated: false,
+
+    },
+  ];
+
+  const [mySounds, setMySounds] = useState<SoundItem[]>(initialSounds);
 
   return (
     <div className={`container ${isCollapsed ? "collapsed" : ""}`}>
-      {/* Tabs - only show when not collapsed */}
+      {/* Tabs */}
       {!isCollapsed && (
         <div className="tabs">
           <button
@@ -78,75 +81,57 @@ const SoundModal: React.FC<SoundGeneratorUIProps> = ({
         </div>
       )}
 
-      {!isCollapsed && (
-        <div className="mainContent">
-          {activeTab === "generate" ? (
-            <div className="generateContent">
-              <div className="mb-55 w-full">
-                <SoundGenerator />
-              </div>
+      {/* Main Content */}
+      <div className={`mainContent ${isCollapsed ? "hiddenWhenCollapsed" : ""}`}>
+        {activeTab === "generate" ? (
+          <div className="generateContent">
+            <div className="mb-30 w-100">
+              <SoundGenerator
+                onGenerated={(audioURL: string, prompt: string) => {
+                  const newSound: SoundItem = {
+                    name: prompt,
+                    description: `Generated sound for "${prompt}"`,
+                    audio: audioURL,
+                    image: "/images/sound_icons/sound-waves.svg",
+                    isUserGenerated: false,
+                  };
+                  setMySounds((prev) => [newSound, ...prev]);
+                }}
+              />
             </div>
-          ) : (
-            <div className="mySoundsContent">
-              <div className="soundsGrid">
-                <SessionAudioCard
-                  image="/images/sound_icons/rain.svg"
-                  name="Rainy Day"
-                  description="A calming soundscape mirroring a rainy day."
-                  notes_amt={25}
-                  audio="/audio/rainnoise.mp3"
-                />
-
-                <SessionAudioCard
-                  image='/images/sound_icons/brown_noise.png'
-                  name='Brown Noise'
-                  description='A smooth tone to tune out the background noise.'
-                  notes_amt={25}
-                  audio='/audio/brownnoise.mp3'
-                />
-
-                <SessionAudioCard
-                  image='/images/sound_icons/water.svg'
-                  name='River Flow'
-                  description='Liquid smooth sounds to go with the flow.'
-                  notes_amt={25}
-                  audio='/audio/rivernoise.mp3'
-                />
-
-                <SessionAudioCard
-                  image='/images/sound_icons/gong.svg'
-                  name='Soundbath'
-                  description='A therapeutic sequence of regal gongs.'
-                  notes_amt={25}
-                  audio='/audio/soundbathnoise.mp3'
-                />
-
-                {/* <SessionAudioCard
-                  image='/images/sound_icons/sound-waves.svg'
-                  name='White Noise'
-                  description='A tone that washes over and blocks out distractions.'
-                  notes_amt={25}
-                  audio='/audio/whitenoise.mp3'
-                /> */}
-              </div>
+          </div>
+        ) : (
+          <div className="mySoundsContent">
+            <div className="soundsGrid">
+              {mySounds.length === 0 ? (
+                <p className="emptyState">No sounds yet!</p>
+              ) : (
+                mySounds.map((sound, idx) => (
+                  <SessionAudioCard
+                    key={idx}
+                   image={sound.isUserGenerated ? "'undefined'" : sound.image || "/images/sound_icons/default.svg"}
+                    name={sound.name}
+                    description={sound.description}
+                    notes_amt={25}
+                    audio={sound.audio}
+                  />
+                ))
+              )}
             </div>
-          )}
-        </div>
-      )}
-
-      <div
-        className={`bottomControls ${
-          isCollapsed ? "collapsedBottomControls" : ""
-        }`}
-      >
-        {!isCollapsed && activeTab === "generate" && (
-          <div className="leftControls"></div>
+          </div>
         )}
+      </div>
+
+      {/* Bottom Controls */}
+      <div className={`bottomControls ${isCollapsed ? "collapsedBottomControls" : ""}`}>
+        {!isCollapsed && activeTab === "generate" && <div className="leftControls"></div>}
 
         <div className="rightControls">
-          <button  
-           className={`iconButton ${selectedIcon === "wave" ? "iconActive" : ""}`}
-            onClick={() => onSelectIcon?.("wave")}>
+          <button
+            className={`iconButton ${selectedIcon === "wave" ? "iconActive" : ""}`}
+            onClick={() => onSelectIcon?.("wave")}
+          >
+            {/* Wave SVG */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -163,12 +148,12 @@ const SoundModal: React.FC<SoundGeneratorUIProps> = ({
               />
             </svg>
           </button>
+
           <button
             className={`iconButton ${selectedIcon === "clock" ? "iconActive" : ""}`}
-         onClick={() => {
-          onSelectIcon?.("clock");
-    }}
+            onClick={() => onSelectIcon?.("clock")}
           >
+            {/* Clock SVG */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
@@ -186,11 +171,8 @@ const SoundModal: React.FC<SoundGeneratorUIProps> = ({
               />
             </svg>
           </button>
-          <button
-            className="iconButton"
-            onClick={onFullscreen}
-            title="Fullscreen"
-          >
+
+          <button className="iconButton" title="Fullscreen">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="22"
@@ -204,6 +186,7 @@ const SoundModal: React.FC<SoundGeneratorUIProps> = ({
               />
             </svg>
           </button>
+
           <button
             className="iconButton"
             onClick={() => setIsCollapsed(!isCollapsed)}
@@ -277,8 +260,8 @@ const SoundModal: React.FC<SoundGeneratorUIProps> = ({
           display: flex;
           align-items: center;
           justify-content: center;
-          overflow-y: auto;
           animation: fadeIn 0.3s ease;
+          overflow-y: hidden;
         }
 
         .generateContent {
@@ -291,7 +274,7 @@ const SoundModal: React.FC<SoundGeneratorUIProps> = ({
         .mySoundsContent {
           width: 100%;
           height: 100%;
-          overflow-y: auto;
+          overflow-y: hidden;
           padding: 8px;
         }
 
@@ -435,7 +418,9 @@ const SoundModal: React.FC<SoundGeneratorUIProps> = ({
         }
       `}</style>
     </div>
-  );
+   
+  )
 };
+
 
 export default SoundModal;

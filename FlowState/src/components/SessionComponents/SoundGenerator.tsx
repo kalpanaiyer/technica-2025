@@ -1,13 +1,26 @@
 import React, { useState, useRef } from "react";
 
 const ELEVENLABS_API_KEY = import.meta.env.VITE_ELEVENLABS_API_KEY;
-const SOUND_MODEL_ID: string = "eleven_text_to_sound_v2";
+const SOUND_MODEL_ID = "eleven_text_to_sound_v2";
 
-const App: React.FC = () => {
+export interface SoundItem {
+  name: string;
+  description: string;
+  audio: string;
+  image?: string;
+  isUserGenerated: boolean;
+}
+
+interface SoundGeneratorProps {
+  onGenerated?: (audioURL: string, prompt: string) => void;
+}
+
+const SoundGenerator: React.FC<SoundGeneratorProps> = ({ onGenerated }) => {
   const [prompt, setPrompt] = useState<string>("");
   const [audioURL, setAudioURL] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  const [mySounds, setMySounds] = useState<SoundItem[]>([]);
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -23,9 +36,7 @@ const App: React.FC = () => {
     }
 
     setIsLoading(true);
-    if (audioRef.current) {
-      audioRef.current.pause();
-    }
+    if (audioRef.current) audioRef.current.pause();
     setAudioURL("");
     setError("");
     setIsPlaying(false);
@@ -50,32 +61,31 @@ const App: React.FC = () => {
       if (!response.ok) {
         const errorBody = await response.text();
         console.error("ElevenLabs Error Details:", errorBody);
-
-        let errorMessage = `API error ${response.status}: ${response.statusText}.`;
-
-        try {
-          const errorJson = JSON.parse(errorBody);
-          if (errorJson.detail) {
-            errorMessage =
-              errorJson.detail.message || JSON.stringify(errorJson.detail);
-          }
-        } catch {
-          throw new Error(errorMessage);
-        }
+        throw new Error(
+          `API error ${response.status}: ${response.statusText}`
+        );
       }
 
-      const audioBuffer: ArrayBuffer = await response.arrayBuffer();
-
-      const audioBlob: Blob = new Blob([audioBuffer], { type: "audio/mpeg" });
-      const url: string = URL.createObjectURL(audioBlob);
+      const audioBuffer = await response.arrayBuffer();
+      const audioBlob = new Blob([audioBuffer], { type: "audio/mpeg" });
+      const url = URL.createObjectURL(audioBlob);
       setAudioURL(url);
+
+      // Notify parent
+      onGenerated?.(url, prompt);
+
+      const newSound: SoundItem = {
+        name: prompt,
+        description: `Generated sound for "${prompt}"`,
+        audio: url,
+        isUserGenerated: true,
+      };
+      setMySounds((prev) => [newSound, ...prev]);
     } catch (err) {
-      const error = err as Error;
-      console.error("ElevenLabs API Error:", error);
+      const errorObj = err as Error;
+      console.error("ElevenLabs API Error:", errorObj);
       setError(
-        `Failed to generate sound: ${
-          error.message || "Check console for details."
-        }`
+        `Failed to generate sound: ${errorObj.message || "Check console for details."}`
       );
     } finally {
       setIsLoading(false);
@@ -83,36 +93,46 @@ const App: React.FC = () => {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      generateSound();
-    }
+    if (event.key === "Enter") generateSound();
   };
 
-  // Toggles playback of the audio element
   const togglePlayPause = () => {
     if (audioRef.current) {
       if (isPlaying) {
         audioRef.current.pause();
       } else {
         audioRef.current.play().catch((e) => {
-          console.error("Error attempting to play audio:", e);
+          console.error("Playback error:", e);
           setError(
-            "Playback failed. Please ensure your browser allows media playback without a user gesture."
+            "Playback failed. Ensure your browser allows audio playback."
           );
         });
       }
-
       setIsPlaying(!isPlaying);
     }
   };
 
+  const saveSound = () => {
+    if (!audioURL.trim()) return;
+
+    const newSound: SoundItem = {
+      name: prompt,
+      description: `Generated sound for "${prompt}"`,
+      audio: audioURL,
+      image: "/images/sound_icons/generated_sound.svg",
+    };
+
+    setMySounds((prev) => [newSound, ...prev]);
+    onGenerated?.(audioURL, prompt);
+  };
+
   return (
-    <div>
+    <div className="space-y-4">
       <div className="flex gap-2 items-end">
         <input
           type="text"
           value={prompt}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrompt(e.target.value)}
+          onChange={(e) => setPrompt(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="e.g. White Noise or Calm Ocean"
           disabled={isLoading}
@@ -127,61 +147,30 @@ const App: React.FC = () => {
               : "bg-blue-600 text-white hover:bg-blue-700 active:scale-95"
           }`}
         >
-          {isLoading ? (
-            <span className="flex items-center justify-center">
-              <svg
-                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                ></circle>
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
-              Generating Audio...
-            </span>
-          ) : (
-            "Generate Sound"
-          )}
+          {isLoading ? "Generating..." : "Generate Sound"}
         </button>
       </div>
 
       {error && (
-        <p className="mt-4 text-sm font-medium text-red-600 bg-red-50 p-3 rounded-lg border border-red-200">
-          Error: {error}
+        <p className="mt-2 text-sm font-medium text-red-600 bg-red-50 p-3 rounded-lg border border-red-200">
+          {error}
         </p>
       )}
 
       {audioURL && (
-        <div className="flex items-center space-x-4 w-full mt-6 p-4 bg-white border border-gray-200 rounded-lg shadow-inner">
-          {/* Custom Play/Pause Button - Hides the time display */}
+        <div className="flex items-center space-x-4 w-full mt-4 p-4 bg-white border border-gray-200 rounded-lg shadow-inner">
           <button
             onClick={togglePlayPause}
-            className="hover:cursor-pointer p-3 bg-[#478094] text-white rounded-full hover:bg-[#1C4857] transition duration-150 shadow-lg shrink-0"
+            className="p-3 bg-[#478094] text-white rounded-full hover:bg-[#1C4857] transition duration-150 shadow-lg shrink-0"
           >
             {isPlaying ? (
               <svg
                 className="w-6 h-6"
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
                 fill="none"
+                viewBox="0 0 24 24"
                 stroke="currentColor"
                 strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
               >
                 <rect width="6" height="16" x="4" y="4" />
                 <rect width="6" height="16" x="14" y="4" />
@@ -190,27 +179,39 @@ const App: React.FC = () => {
               <svg
                 className="w-6 h-6"
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
                 fill="none"
+                viewBox="0 0 24 24"
                 stroke="currentColor"
                 strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
               >
                 <polygon points="5 3 19 12 5 21 5 3" />
               </svg>
             )}
           </button>
 
+          <button
+            onClick={saveSound}
+            className="p-3 bg-[#F4CAE0] text-white rounded-full hover:bg-[#D7B9D5] transition duration-150 shadow-lg shrink-0"
+            title="Save Sound"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
+            </svg>
+          </button>
+
           <p className="font-semibold text-gray-700 text-sm">
-            {isPlaying
-              ? `Now Playing: "${prompt}"`
-              : `Ready to Play: "${prompt}"`}
+            {isPlaying ? `Now Playing: "${prompt}"` : `"${prompt}" is ready for you! Take a listen!`}
           </p>
 
-          {/* Hidden Audio Element - No 'controls' attribute */}
           <audio
             ref={audioRef}
             src={audioURL}
@@ -225,4 +226,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default SoundGenerator;

@@ -1,4 +1,6 @@
 import SessionAudioButton from "./SessionAudioButton";
+import {useState} from 'react';
+
 interface AudioCardProps {
   image: string;
   name: string;
@@ -7,7 +9,18 @@ interface AudioCardProps {
   audio: string;
 }
 
+// interface SoundItem {
+//   name: string,
+//   description: string,
+//   audio: string,
+//   image?: string
+// }
+
+
+
 const SessionAudioCard: React.FC<AudioCardProps> = (props) => {
+
+
   return (
     <div className="bg-[#F0F8FF] rounded-lg shadow p-2 max-w-[180px]">
       <span className="flex gap-2">
