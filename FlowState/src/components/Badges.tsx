@@ -1,11 +1,14 @@
 import React from 'react';
 import './Badges.css';
 
-const Badges: React.FC = () => {
+interface BadgeProps {
+  image: string;
+}
+
+const Badges: React.FC<BadgeProps> = ({ image }: BadgeProps) => {
   return (
-    <div className="badges-container">
-      <h3>Your Badges</h3>
-      
+    <div>
+      <img src={image} alt="Badge" className='badge' />
     </div>
   );
 };

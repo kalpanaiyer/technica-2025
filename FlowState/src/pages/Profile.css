@@ -13,11 +13,8 @@
 }
 
 .profile-layout {
-  display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: 24px;
-  max-width: 1400px;
-  align-items: start;
+  display: flex;
+  gap: 3rem;
 }
 
 .left-section {
@@ -31,4 +28,39 @@
   justify-content: flex-end;
   align-items: start; 
   margin-top: 4.5rem;
+}
+
+.badges-container {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  padding: 24px;
+  height: 17rem;
+  flex-shrink: 0;
+  margin-bottom: 20px;
+}
+
+.badges-container h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 20px 0;
+  color: #333;
+}
+
+.badges-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.inventory-container {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.inventory-container h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  color: #333;
 }
