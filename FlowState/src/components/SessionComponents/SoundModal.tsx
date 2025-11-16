@@ -38,62 +38,52 @@ const SoundModal: React.FC<SoundGeneratorUIProps> = ({
           </button>
         </div>
       )}
+<div className={`mainContent ${isCollapsed ? "hiddenWhenCollapsed" : ""}`}>
+  {activeTab === "generate" ? (
+    <div className="generateContent">
+      <div className="mb-55 w-full">
+        <SoundGenerator />
+      </div>
+    </div>
+  ) : (
+    <div className="mySoundsContent">
+      <div className="soundsGrid">
+        <SessionAudioCard
+          image="/images/sound_icons/rain.svg"
+          name="Rainy Day"
+          description="A calming soundscape mirroring a rainy day."
+          notes_amt={25}
+          audio="/audio/rainnoise.mp3"
+        />
 
-      {!isCollapsed && (
-        <div className="mainContent">
-          {activeTab === "generate" ? (
-            <div className="generateContent">
-              <div className="mb-55 w-full">
-                <SoundGenerator />
-              </div>
-            </div>
-          ) : (
-            <div className="mySoundsContent">
-              <div className="soundsGrid">
-                <SessionAudioCard
-                  image="/images/sound_icons/rain.svg"
-                  name="Rainy Day"
-                  description="A calming soundscape mirroring a rainy day."
-                  notes_amt={25}
-                  audio="/audio/rainnoise.mp3"
-                />
+        <SessionAudioCard
+          image="/images/sound_icons/brown_noise.png"
+          name="Brown Noise"
+          description="A smooth tone to tune out the background noise."
+          notes_amt={25}
+          audio="/audio/brownnoise.mp3"
+        />
 
-                <SessionAudioCard
-                  image='/images/sound_icons/brown_noise.png'
-                  name='Brown Noise'
-                  description='A smooth tone to tune out the background noise.'
-                  notes_amt={25}
-                  audio='/audio/brownnoise.mp3'
-                />
+        <SessionAudioCard
+          image="/images/sound_icons/water.svg"
+          name="River Flow"
+          description="Liquid smooth sounds to go with the flow."
+          notes_amt={25}
+          audio="/audio/rivernoise.mp3"
+        />
 
-                <SessionAudioCard
-                  image='/images/sound_icons/water.svg'
-                  name='River Flow'
-                  description='Liquid smooth sounds to go with the flow.'
-                  notes_amt={25}
-                  audio='/audio/rivernoise.mp3'
-                />
+        <SessionAudioCard
+          image="/images/sound_icons/gong.svg"
+          name="Soundbath"
+          description="A therapeutic sequence of regal gongs."
+          notes_amt={25}
+          audio="/audio/soundbathnoise.mp3"
+        />
+      </div>
+    </div>
+  )}
+</div>
 
-                <SessionAudioCard
-                  image='/images/sound_icons/gong.svg'
-                  name='Soundbath'
-                  description='A therapeutic sequence of regal gongs.'
-                  notes_amt={25}
-                  audio='/audio/soundbathnoise.mp3'
-                />
-
-                {/* <SessionAudioCard
-                  image='/images/sound_icons/sound-waves.svg'
-                  name='White Noise'
-                  description='A tone that washes over and blocks out distractions.'
-                  notes_amt={25}
-                  audio='/audio/whitenoise.mp3'
-                /> */}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
 
       <div
         className={`bottomControls ${
