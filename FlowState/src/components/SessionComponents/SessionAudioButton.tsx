@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { loadAudio, togglePlayPause, getIsPlaying } from './AudioFunctions';
+import { loadAudio, togglePlayPause, getIsPlaying } from '.././AudioCards/AudioFunctions'
 
 interface AudioButtonProps {
   audioPath: string;
 }
 
-export default function AudioButton({ audioPath }: AudioButtonProps) {
+export default function SessionAudioButton({ audioPath }: AudioButtonProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -32,7 +32,7 @@ export default function AudioButton({ audioPath }: AudioButtonProps) {
       disabled={isLoading}
       className='hover:cursor-pointer text-[#5D608A] text-xl'
     >
-      {isLoading ? 'Loading...' : isPlaying ? '⏸Playing...' : '▶ Preview Sound'}
+      {isLoading ? 'Loading...' : isPlaying ? '⏸Playing...' : '▶ Play'}
     </button>
   );
 }

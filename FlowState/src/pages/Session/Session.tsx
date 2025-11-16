@@ -1,5 +1,6 @@
 import styles from "./Session.module.css";
 // import { useNavigate } from 'react-router-dom'
+
 import { useState, useEffect } from 'react'
 import { onAuthStateChanged } from 'firebase/auth';
 import Timer from "../../components/SessionComponents/Timer";
@@ -10,6 +11,8 @@ import { auth } from '../../../firebase.ts';
 import { getUserNotes } from '../../services/NotesService.tsx';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../../../firebase.ts';
+import WaveTimer from "../../components/SessionComponents/WaveTimer";
+
 
 
 
@@ -54,16 +57,22 @@ const Session: React.FC = () => {
       };
     }, []);
 
+  const [selectedIcon, setSelectedIcon] =  useState<"clock" | "wave">("clock");
+
+
+
+
+
   return (
     <>
       <div className={styles.sessionContainer}>
-        <div className="pt-5 pl-5">
-          <NotesButton count={notesCount} onRefresh={refreshNotes} />
-        </div>
-        
-        <div className="flex justify-center">
-          <Timer />
-          <SoundModal />
+
+        <div className="flex justify-center pt-16">
+            {selectedIcon === "clock" ? <Timer /> : <WaveTimer />}
+            <SoundModal
+                selectedIcon={selectedIcon}
+                onSelectIcon={(icon) => setSelectedIcon(icon)}
+            />
         </div>
 
         <div className="flex justify-start mt-4">
